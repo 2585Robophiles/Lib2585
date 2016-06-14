@@ -40,7 +40,8 @@ public class DrivetrainTest {
 	 */
 	@Before
 	public void setUp() {
-		drivetrain = new TestDrivetrain(INPUT_DEADZONE, RAMP, PRIMARY_ROTATION_EXPONENT, SECONDARY_ROTATION_EXPONENT, null);
+		drivetrain = new TestDrivetrain(INPUT_DEADZONE, RAMP, PRIMARY_ROTATION_EXPONENT, SECONDARY_ROTATION_EXPONENT,false,
+				null);
 		currentRampForward = 0;
 		driveForward = 0;
 		rotate = 0;
@@ -179,9 +180,8 @@ public class DrivetrainTest {
 		 * @param secondEx secondary rotation exponent
 		 * @param drivebase robot drive object
 		 */
-		public TestDrivetrain(double inputDeadzone, double ramping, double primaryEx, double secondEx,
-				RobotDrive drivebase) {
-			super(inputDeadzone, ramping, primaryEx, secondEx, drivebase);
+		public TestDrivetrain(double inputDeadzone, double ramping, double primaryEx, double secondEx, boolean invertRotate, RobotDrive drivebase) {
+			super(inputDeadzone, ramping, primaryEx, secondEx, invertRotate, drivebase);
 		}
 
 		/* (non-Javadoc)

@@ -17,7 +17,7 @@ public class Drivetrain implements Destroyable {
 	private Toggler invertToggler;
 	private Toggler rotationExponentToggler;
 	private boolean usePrimaryRotationExponent = true;
-
+	private boolean invertRotate = false;
 
 	/** 
 	 * @param inputDeadzone joystick deadzone 
@@ -26,15 +26,49 @@ public class Drivetrain implements Destroyable {
 	 * @param secondEx secondary rotation exponent
 	 * @param drivebase robot drive object
 	 */
-	public Drivetrain(double inputDeadzone, double ramping, double primaryEx, double secondEx, RobotDrive drivebase){
+	public Drivetrain(double inputDeadzone, double ramping, double primaryEx, double secondEx, boolean invertRotate, RobotDrive drivebase){
 		deadzone = inputDeadzone;
 		ramp = ramping;
 		primaryRotationExponent = primaryEx;
 		secondaryRotationExponent = secondEx;
 		drivetrain = drivebase;
 		invertToggler = new Toggler(inverted);
+		this.invertRotate = invertRotate;
 		rotationExponentToggler = new Toggler(usePrimaryRotationExponent);
 	}
+
+	
+	/**
+	 * @return the drivetrain
+	 */
+	public RobotDrive getDrivetrain() {
+		return drivetrain;
+	}
+
+
+	/**
+	 * @param drivetrain the drivetrain to set
+	 */
+	public void setDrivetrain(RobotDrive drivetrain) {
+		this.drivetrain = drivetrain;
+	}
+
+
+	/**
+	 * @return the invertRotate
+	 */
+	public boolean isInvertRotate() {
+		return invertRotate;
+	}
+
+
+	/**
+	 * @param invertRotate the invertRotate to set
+	 */
+	public void setInvertRotate(boolean invertRotate) {
+		this.invertRotate = invertRotate;
+	}
+
 
 	/**
 	 * @param desiredRampForward movement input
@@ -96,7 +130,8 @@ public class Drivetrain implements Destroyable {
 	 * @param rotationValue rotation output
 	 */
 	public void arcadeDrive(double moveValue, double rotationValue){
-		drivetrain.drive(moveValue, rotationValue);
+		double rotate = invertRotate ? -rotationValue : rotationValue;
+		drivetrain.drive(moveValue, rotate);
 	}
 
 	/**
